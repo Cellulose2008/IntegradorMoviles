@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="@drawable/fondo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:background="@drawable/toolbarf">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            />
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical"
+                />
+
+            <ImageButton
+                android:id="@+id/irCrear"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:src="@drawable/crear" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="vertical"
+                />
+
+            <ImageButton
+                android:id="@+id/irEditar"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:src="@drawable/editar" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:orientation="vertical"
+                />
+
+            <ImageButton
+                android:id="@+id/irVer"
+                android:layout_width="140dp"
+                android:layout_height="150dp"
+                android:src="@drawable/ver" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:orientation="vertical"
+                />
+
+            <ImageButton
+                android:id="@+id/irBorrar"
+                android:layout_width="140dp"
+                android:layout_height="160dp"
+                android:src="@drawable/eliminar" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

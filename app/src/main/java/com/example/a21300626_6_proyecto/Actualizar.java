@@ -73,6 +73,10 @@ public class Actualizar extends AppCompatActivity {
         recordatorio unrecordatorio = new recordatorio(ET_titulo.getText().toString(),
                 ET_cuerpo.getText().toString(), ET_fecha.getText().toString());
 
+        unrecordatorio.setCuerpo(ET_cuerpo.getText().toString());
+        unrecordatorio.setTitulo(ET_titulo.getText().toString());
+        unrecordatorio.setFecha(ET_fecha.getText().toString());
+
         lista.listaIn.set(posicion, unrecordatorio);
         Toast.makeText(this, "Actualizado.", Toast.LENGTH_SHORT).show();
     }

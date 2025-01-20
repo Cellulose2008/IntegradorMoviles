@@ -1,6 +1,8 @@
 package com.example.a21300626_6_proyecto;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,10 +14,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import adaptadores.adaptadorver;
 
 public class verl extends AppCompatActivity {
 
     Toolbar toolbar;
+    RecyclerView rv;
+    SharedPreferences archivo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,15 @@ public class verl extends AppCompatActivity {
         setContentView(R.layout.activity_verl);
 
         toolbar = findViewById(R.id.toolbar);
+
+        rv=findViewById(R.id.rv_lista);
+        adaptadorver av = new adaptadorver();
+        av.context=this;
+        LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(llm);
+        rv.setAdapter(av);
+
+        archivo = this.getSharedPreferences("sesion", Context.MODE_PRIVATE);
 
         setSupportActionBar(toolbar);
     }

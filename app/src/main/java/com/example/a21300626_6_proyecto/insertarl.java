@@ -47,7 +47,7 @@ public class insertarl extends AppCompatActivity {
         crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                insertar2();
             }
         });
         setSupportActionBar(toolbar);
@@ -92,7 +92,7 @@ public class insertarl extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void insertar() throws JSONException {
+   /* private void insertar() throws JSONException {
         String titulo, desarrollo, fecha;
         titulo = ET_titulo.getText().toString();
         desarrollo = ET_cuerpo.getText().toString();
@@ -125,6 +125,21 @@ public class insertarl extends AppCompatActivity {
             });
             RequestQueue fila = Volley.newRequestQueue(this);
             fila.add(pet);
+        }else{
+            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+    }
+    */
+
+    private void insertar2(){
+        String titulo, desarrollo, fecha;
+        titulo = ET_titulo.getText().toString();
+        desarrollo = ET_cuerpo.getText().toString();
+        fecha = ET_fecha.getText().toString();
+        if(!titulo.isEmpty() || !desarrollo.isEmpty() || !fecha.isEmpty()) {
+            recordatorio nuevo = new recordatorio(titulo, desarrollo, fecha);
+            lista.listaIn.add(nuevo);
+            Toast.makeText(this, "Nota creada", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
         }

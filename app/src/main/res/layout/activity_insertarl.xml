@@ -88,6 +88,7 @@
         android:textSize="35sp"
         android:layout_gravity="center"
         android:background="@color/purpura"
+        android:fontFamily="@font/segoesc"
         />
 
 

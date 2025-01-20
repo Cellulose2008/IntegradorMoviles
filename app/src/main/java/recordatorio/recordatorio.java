@@ -1,7 +1,5 @@
 package recordatorio;
 
-import java.util.Date;
-
 public class recordatorio
 {
     public String getTitulo() {

@@ -2,9 +2,10 @@ package com.example.a21300626_6_proyecto;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -12,19 +13,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import lista.lista;
 import recordatorio.recordatorio;
@@ -32,7 +20,9 @@ import recordatorio.recordatorio;
 public class Actualizar extends AppCompatActivity {
 
     EditText ET_titulo,ET_fecha,ET_cuerpo;
+    Button Anterior, GuardarCambios, Siguiente;
     Toolbar toolbar;
+    int posicion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +34,67 @@ public class Actualizar extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        Anterior = findViewById(R.id.anterior);
+        GuardarCambios = findViewById(R.id.guardarCambios);
+        Siguiente = findViewById(R.id.siguiente);
+
+        ET_cuerpo = findViewById(R.id.cuerpoID);
+        ET_fecha = findViewById(R.id.fechaID);
+        ET_titulo = findViewById(R.id.tituloID);
+
+        posicion = 0;
+
+        llenardatos(posicion);
+
+        Anterior.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                anterior();
+            }
+        });
+
+        GuardarCambios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actualizar();
+            }
+        });
+
+        Siguiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                siguiente();
+            }
+        });
+
+    }
+
+    private void actualizar() {
+        recordatorio unrecordatorio = new recordatorio(ET_titulo.getText().toString(),
+                                      ET_cuerpo.getText().toString(), ET_fecha.getText().toString());
+
+        lista.listaIn.set(posicion, unrecordatorio);
+        Toast.makeText(this, "Actualizado.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void siguiente() {
+        Integer tamaño = lista.listaIn.size();
+
+        posicion = (posicion +1) % tamaño;
+        llenardatos(posicion);
+    }
+
+    private void anterior() {
+        Integer tamaño = lista.listaIn.size();
+
+        posicion = (posicion -1) % tamaño;
+        llenardatos(posicion);
+    }
+
+    private void llenardatos(int posicion) {
+        ET_titulo.setText(lista.listaIn.get(posicion).getTitulo());
+        ET_fecha.setText(lista.listaIn.get(posicion).getFecha());
+        ET_cuerpo.setText(lista.listaIn.get(posicion).getCuerpo());
     }
 
     @Override
@@ -84,41 +135,6 @@ public class Actualizar extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void insertar() throws JSONException {
-        String titulo, desarrollo, fecha;
-        titulo = ET_titulo.getText().toString();
-        desarrollo = ET_cuerpo.getText().toString();
-        fecha = ET_fecha.getText().toString();
-        if(!titulo.isEmpty() || !desarrollo.isEmpty() || !fecha.isEmpty()){
-            recordatorio nuevo = new recordatorio(titulo, desarrollo, fecha);
-            lista.listaIn.add(nuevo);
-            JSONObject newRecordatorio = new JSONObject();
-            newRecordatorio.put("titulo", titulo);
-            newRecordatorio.put("desarrollo", desarrollo);
-            newRecordatorio.put("fecha", fecha);
-            String url = "http://192.168.100.28/insertar.php"; //cambia la IP por la tuya (ipconfig en cmd)
-            JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, newRecordatorio, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        Toast.makeText(getApplicationContext(), "Se ha creado el recordatorio", Toast.LENGTH_SHORT).show();
-                    } catch (Exception e){
-                        Log.d("3", "aqui estoy");
-                        throw new RuntimeException(e);
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    String errorMessage = (error.getMessage() != null) ? error.getMessage() : "Error desconocido";
-                    // Mostrar el mensaje de error en Log
-                    Log.d("error", error.getMessage());
-                }
-            });
-            RequestQueue fila = Volley.newRequestQueue(this);
-            fila.add(pet);
-        }else{
-            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
-        }
-    }
+
+
 }

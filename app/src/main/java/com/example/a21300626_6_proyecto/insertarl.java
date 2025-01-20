@@ -17,9 +17,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -112,7 +109,7 @@ public class insertarl extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        Toast.makeText(getApplicationContext(), "Se ha creado el recordatorio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Se ha creado el recordatorioIn", Toast.LENGTH_SHORT).show();
                     } catch (Exception e){
                         Log.d("3", "aqui estoy");
                         throw new RuntimeException(e);

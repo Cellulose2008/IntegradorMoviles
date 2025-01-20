@@ -23,6 +23,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:inputType="textPassword"
         android:textColor="@color/white"
         android:hint="Contraseña"
         android:fontFamily="@font/segoesc"

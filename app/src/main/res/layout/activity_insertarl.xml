@@ -10,6 +10,7 @@
     android:background="@drawable/insertar_fondo">
 
     <LinearLayout
+        android:id="@+id/LL_toolbar"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="vertical"
@@ -21,23 +22,27 @@
     </LinearLayout>
     
     <LinearLayout
+        android:id="@+id/LL_Espacio"
         android:layout_width="match_parent"
         android:layout_height="270dp"
         android:orientation="vertical"
         />
     
     <LinearLayout
+        android:id="@+id/LL_titulo"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/LL_Espacio"
             android:layout_width="110dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             />
 
         <EditText
+            android:id="@+id/ET_titulo"
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:hint="Titulo"
@@ -48,6 +53,7 @@
             />
 
         <EditText
+            android:id="@+id/ET_fecha"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:hint="XX/XX/XX"
@@ -60,6 +66,7 @@
     </LinearLayout>
 
     <EditText
+        android:id="@+id/ET_cuerpo"
         android:layout_width="210dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
@@ -67,12 +74,14 @@
         android:fontFamily="@font/segoesc"
         />
     <LinearLayout
+        android:id="@+id/LL_Espacio2"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="vertical"
         />
 
     <Button
+        android:id="@+id/BT_crear"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:text="Crear"

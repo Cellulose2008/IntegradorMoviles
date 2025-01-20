@@ -16,7 +16,7 @@ public class recordatorio
         Cuerpo = cuerpo;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         Fecha = fecha;
     }
 
@@ -24,13 +24,13 @@ public class recordatorio
         return Cuerpo;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return Fecha;
     }
 
     private String Titulo;
     private String Cuerpo;
-    private Date Fecha;
+    private String Fecha;
     private boolean isChecked;
 
     public boolean isChecked() {
@@ -40,7 +40,7 @@ public class recordatorio
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
-    public recordatorio(String _Titulo, String _Cuerpo, Date _fecha) {
+    public recordatorio(String _Titulo, String _Cuerpo, String _fecha) {
         Titulo = _Titulo;
         Cuerpo = _Cuerpo;
         Fecha = _fecha;

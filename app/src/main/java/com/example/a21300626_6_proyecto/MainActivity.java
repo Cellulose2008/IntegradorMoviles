@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private void empezar() {
-        String url = "http://192.168.100.100/ver.php"; //cambia la IP por la tuya (ipconfig en cmd)
+        String url = "http://192.168.100.100/ver.php"; // cambia la IP por la tuya (ipconfig en cmd)
         Response.Listener<JSONArray> respuesta = new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -135,16 +135,16 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("3", "aqui estoy");
                     throw new RuntimeException(e);
                 }
-            };
-            Response.ErrorListener errorListener = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("Error", error.toString());
-                }
-            };
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, url, null, respuesta, errorListener);
-            RequestQueue fila = Volley.newRequestQueue(MainActivity.this);
-            fila.add(jsonArrayRequest);
+            }
         };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", error.toString());
+            }
+        };
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, respuesta, errorListener);
+        RequestQueue fila = Volley.newRequestQueue(MainActivity.this);
+        fila.add(jsonArrayRequest);
     }
 }

@@ -40,6 +40,7 @@ public class recordatorio
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
     public recordatorio(String _Titulo, String _Cuerpo, String _fecha) {
         Titulo = _Titulo;
         Cuerpo = _Cuerpo;

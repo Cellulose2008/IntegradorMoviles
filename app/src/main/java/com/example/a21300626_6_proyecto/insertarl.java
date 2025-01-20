@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import lista.lista;
 import recordatorio.recordatorio;
 
 import androidx.activity.EdgeToEdge;
@@ -93,6 +94,7 @@ public class insertarl extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     private void insertar() throws JSONException {
         String titulo, desarrollo, fecha;
         titulo = ET_titulo.getText().toString();
@@ -100,7 +102,7 @@ public class insertarl extends AppCompatActivity {
         fecha = ET_fecha.getText().toString();
         if(!titulo.isEmpty() || !desarrollo.isEmpty() || !fecha.isEmpty()){
             recordatorio nuevo = new recordatorio(titulo, desarrollo, fecha);
-            lista.lista.lista.add(nuevo);
+            lista.listaIn.add(nuevo);
             JSONObject newRecordatorio = new JSONObject();
             newRecordatorio.put("titulo", titulo);
             newRecordatorio.put("desarrollo", desarrollo);

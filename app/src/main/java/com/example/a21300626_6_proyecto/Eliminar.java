@@ -1,12 +1,15 @@
 package com.example.a21300626_6_proyecto;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,13 +33,15 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import adaptadores.adaptadoreliminar;
 import recordatorio.recordatorio;
 
 public class Eliminar extends AppCompatActivity {
 
-    SharedPreferences archivo;
-    TextView ET_titulo;
+    RecyclerView rv2;
+    ImageButton eliminar;
     Toolbar toolbar;
+    SharedPreferences archivo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +50,18 @@ public class Eliminar extends AppCompatActivity {
         setContentView(R.layout.activity_eliminar);
 
         toolbar = findViewById(R.id.toolbar);
+        eliminar = findViewById(R.id.eliminarID);
 
         setSupportActionBar(toolbar);
 
+        rv2=findViewById(R.id.rv_eliminar);
+        adaptadoreliminar av = new adaptadoreliminar();
+        av.context=this;
+        LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rv2.setLayoutManager(llm);
+        rv2.setAdapter(av);
+
+        archivo = this.getSharedPreferences("sesion", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -85,38 +101,9 @@ public class Eliminar extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void insertar() throws JSONException {
-        String titulo;
-        titulo = ET_titulo.getText().toString();
-        if(!titulo.isEmpty()){
-            JSONObject newRecordatorio = new JSONObject();
-            newRecordatorio.put("titulo", titulo);
-            String url = "http://192.168.100.100/eliminar.php?title=";
-            url=url+titulo;
-            //cambia la IP por la tuya (ipconfig en cmd)
-            JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, newRecordatorio, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        //Toast.makeText(getApplicationContext(), "Se ha creado el recordatorio", Toast.LENGTH_SHORT).show();
-
-                    } catch (Exception e){
-                        Log.d("3", "aqui estoy");
-                        throw new RuntimeException(e);
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    String errorMessage = (error.getMessage() != null) ? error.getMessage() : "Error desconocido";
-                    // Mostrar el mensaje de error en Log
-                    Log.d("error", error.getMessage());
-                }
-            });
-            RequestQueue fila = Volley.newRequestQueue(this);
-            fila.add(pet);
-        }else{
-            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
-        }
+    public void onClick_Eliminar(View view) {
+        adaptadoreliminar.eliminarSeleccionados();
+        Intent delete = new Intent(this, Eliminar.class);
+        startActivity(delete);
     }
 }

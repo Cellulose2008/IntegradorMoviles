@@ -95,23 +95,6 @@ public class inicio extends AppCompatActivity {
         RequestQueue lanzarPeticion = Volley.newRequestQueue(this); //realiza la conexion http
         lanzarPeticion.add(pet);
 
-        /*if (usuario.getText().toString().equals("GUSA")&&
-                contra.getText().toString().equals("cisco")) {
-
-            Intent in = new Intent(this, MainActivity.class);
-            SharedPreferences.Editor editor = archivo.edit();
-            editor.putString("usuario","GUSA");
-            editor.putString("contra", "cisco");
-            editor.putBoolean("valido", true);
-            editor.apply();
-            //editor.commit();
-            startActivity(in);
-            finish();
-        }
-        else {
-            //usuario.setText();
-            Toast.makeText(this, "Datos erroneos.", Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     @Override

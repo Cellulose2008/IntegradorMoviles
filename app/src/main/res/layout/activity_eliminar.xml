@@ -40,11 +40,13 @@
                 />
 
             <ImageButton
+                android:id="@+id/eliminarID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/eliminarbut"
                 android:layout_gravity="center"
-                android:layout_marginTop="150dp"/>
+                android:layout_marginTop="150dp"
+                android:onClick="onClick_Eliminar"/>
 
         </LinearLayout>
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".inicio"
     android:orientation="vertical"
-    android:background="@drawable/loginbg"
+    android:background="@drawable/fondoregistrar"
     android:gravity="center">
 
     <EditText
@@ -17,7 +17,7 @@
         android:hint="Usuario"
         android:fontFamily="@font/segoesc"
         android:layout_marginTop="100dp"
-        android:id="@+id/usuarioID"
+        android:id="@+id/regusuarioID"
         android:textAlignment="center"/>
 
     <EditText
@@ -27,8 +27,9 @@
         android:textColor="@color/white"
         android:hint="Contraseña"
         android:fontFamily="@font/segoesc"
-        android:id="@+id/contraID"
-        android:textAlignment="center"/>
+        android:id="@+id/regcontraID"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -38,24 +39,7 @@
         android:fontFamily="@font/segoesc"
         android:textColor="#5AB06F"
         android:backgroundTint="@color/white"
-        android:layout_marginTop="20dp"
-        android:id="@+id/ingresarID"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:text="Crear cuenta"
-            android:textSize="10sp"
-            android:fontFamily="@font/segoesc"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#52A467"
-            android:textAllCaps="true"
-            />
-    </LinearLayout>
+        android:layout_marginTop="70dp"
+        android:id="@+id/aceptarID" />
 
 </LinearLayout>

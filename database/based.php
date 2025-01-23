@@ -11,7 +11,7 @@
 
         public function ingreso($usr,$pass)
         {
-            $sql = $this->con->prepare("SELECT * FROM cuenta WHERE BINARY cuenta.user = '" . $usr. "' and BINARY password = '" . $pass ."'" );
+            $sql = $this->con->prepare("SELECT * FROM cuenta WHERE BINARY cuenta.user = '" . $usr. "' and BINARY contra = '" . $pass ."'" );
             $sql->execute();
             $res = $sql->fetchAll();
 

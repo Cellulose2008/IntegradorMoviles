@@ -5,10 +5,9 @@
  // Decodificar el JSON recibido
  $data = json_decode($inputData, true); // true convierte el JSON en un array asociativo
 
- $usuario = $data['usuario'];
  $contra = $data['contra'];
  $id = $data['id_usuario'];
- $sql = "UPDATE cuenta SET user = '$usuario', contra = '$contra' WHERE id = '$id'";
+ $sql = "UPDATE cuenta SET contra = '$contra' WHERE id = '$id'";
  // Ejecutar la consulta
  if ($conexion->query($sql) == TRUE) {
     $res = 1;

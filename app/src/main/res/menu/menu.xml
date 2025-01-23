@@ -24,4 +24,9 @@
         android:id="@+id/borrar"
         android:title="Borrar"
         />
+
+    <item
+        android:id="@+id/edcu"
+        android:title="Editar cuenta"
+        />
 </menu>

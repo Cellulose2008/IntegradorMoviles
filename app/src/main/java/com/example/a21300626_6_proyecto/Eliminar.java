@@ -98,6 +98,11 @@ public class Eliminar extends AppCompatActivity {
             startActivity(viewteams);
         }
 
+        if (item.getItemId() == R.id.edcu) {
+            Intent viewteams = new Intent(this, editarusuario.class);
+            startActivity(viewteams);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

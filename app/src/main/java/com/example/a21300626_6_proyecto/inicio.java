@@ -30,7 +30,7 @@ import org.json.JSONObject;
 public class inicio extends AppCompatActivity {
 
     EditText usuario, contra;
-    Button ingresar;
+    Button ingresar, crearCuenta;
     SharedPreferences archivo;
 
     @Override
@@ -42,8 +42,15 @@ public class inicio extends AppCompatActivity {
         usuario = findViewById(R.id.usuarioID);
         contra = findViewById(R.id.contraID);
         ingresar = findViewById(R.id.ingresarID);
+        crearCuenta = findViewById(R.id.BT_CrCu);
         archivo = this.getSharedPreferences("sesion", Context.MODE_PRIVATE);
-
+        crearCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewteams = new Intent(getApplicationContext(), registrarusuario.class);
+                startActivity(viewteams);
+            }
+        });
         ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +63,7 @@ public class inicio extends AppCompatActivity {
     private void ingresar() {
 
         //cambia la IP por la tuya (ipconfig en cmd)
-        String url="http://192.168.137.99/ingreso.php?usr=";
+        String url="http://192.168.100.100/ingreso.php?usr=";
         url=url+usuario.getText().toString();
         url=url+"&pass=";
         url=url+contra.getText().toString();
@@ -66,7 +73,6 @@ public class inicio extends AppCompatActivity {
                 null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
                 try {
                     if (response.getInt("usr") != -1) {
                         Intent i = new Intent(inicio.this, MainActivity.class);
@@ -81,6 +87,7 @@ public class inicio extends AppCompatActivity {
                         Toast.makeText(inicio.this, "Credenciales incorrectas.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
+                    Toast.makeText(inicio.this, "Error en el servidor.", Toast.LENGTH_SHORT).show();
                     throw new RuntimeException(e);
                 }
                 Toast.makeText(inicio.this, response.toString(), Toast.LENGTH_SHORT).show();

@@ -89,6 +89,11 @@ public class insertarl extends AppCompatActivity {
             startActivity(viewteams);
         }
 
+        if (item.getItemId() == R.id.edcu) {
+            Intent viewteams = new Intent(this, editarusuario.class);
+            startActivity(viewteams);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -136,7 +141,7 @@ public class insertarl extends AppCompatActivity {
         titulo = ET_titulo.getText().toString();
         desarrollo = ET_cuerpo.getText().toString();
         fecha = ET_fecha.getText().toString();
-        if(!titulo.isEmpty() || !desarrollo.isEmpty() || !fecha.isEmpty()) {
+        if(titulo.isEmpty() || desarrollo.isEmpty() || fecha.isEmpty()) {
             recordatorio nuevo = new recordatorio(titulo, desarrollo, fecha);
             lista.listaIn.add(nuevo);
             Toast.makeText(this, "Nota creada", Toast.LENGTH_SHORT).show();

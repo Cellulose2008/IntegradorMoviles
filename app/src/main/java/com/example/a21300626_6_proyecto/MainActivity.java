@@ -113,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
             Intent viewteams = new Intent(this, Eliminar.class);
             startActivity(viewteams);
         }
+        if (item.getItemId() == R.id.edcu) {
+            Intent viewteams = new Intent(this, editarusuario.class);
+            startActivity(viewteams);
+        }
         return super.onOptionsItemSelected(item);
     }
     private void empezar() {

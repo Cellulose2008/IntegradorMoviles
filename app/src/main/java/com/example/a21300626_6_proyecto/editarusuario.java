@@ -29,7 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class editarusuario extends AppCompatActivity {
-    EditText editusuario, editcontra;
+    EditText editcontra;
     Button guardar;
     SharedPreferences sesion;
     Toolbar toolbar;
@@ -43,25 +43,18 @@ public class editarusuario extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        editusuario = findViewById(R.id.editusuarioID);
         editcontra = findViewById(R.id.editcontraID);
         guardar = findViewById(R.id.guardarID);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         sesion = getSharedPreferences("sesion", MODE_PRIVATE);
         guardar.setOnClickListener(view -> {
-            String usuario = editusuario.getText().toString();
             String contra = editcontra.getText().toString();
-            if (usuario.isEmpty() || contra.isEmpty()) {
+            if (contra.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
                 return;
             }else {
                 JSONObject nuevo = new JSONObject();
-                try {
-                    nuevo.put("usuario", usuario);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
                 try {
                     nuevo.put("contra", contra);
                 } catch (JSONException e) {
@@ -73,7 +66,7 @@ public class editarusuario extends AppCompatActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                String url = "http://192.168.100.100/modificar.php"; //cambia la IP por la tuya (ipconfig en cmd)
+                String url = "http://192.168.137.217/modificar.php"; //cambia la IP por la tuya (ipconfig en cmd)
                 JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, nuevo, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

@@ -47,7 +47,7 @@ public class insertarl extends AppCompatActivity {
         crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertar2();
+                insertar3();
             }
         });
         setSupportActionBar(toolbar);
@@ -97,26 +97,68 @@ public class insertarl extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-   /* private void insertar() throws JSONException {
+    /*
+    private void insertar2(){
         String titulo, desarrollo, fecha;
         titulo = ET_titulo.getText().toString();
         desarrollo = ET_cuerpo.getText().toString();
         fecha = ET_fecha.getText().toString();
-        if(!titulo.isEmpty() || !desarrollo.isEmpty() || !fecha.isEmpty()){
+        if(titulo.isEmpty() || desarrollo.isEmpty() || fecha.isEmpty()) {
+            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+        }else{
             recordatorio nuevo = new recordatorio(titulo, desarrollo, fecha);
             lista.listaIn.add(nuevo);
-            JSONObject newRecordatorio = new JSONObject();
-            newRecordatorio.put("titulo", titulo);
-            newRecordatorio.put("desarrollo", desarrollo);
-            newRecordatorio.put("fecha", fecha);
-            String url = "http://192.168.100.100/insertar.php"; //cambia la IP por la tuya (ipconfig en cmd)
-            JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, newRecordatorio, new Response.Listener<JSONObject>() {
+            Toast.makeText(this, "Nota creada", Toast.LENGTH_SHORT).show();
+        }
+    }
+     */
+
+    private void insertar3() {
+        String titulo, desarrollo, fecha;
+        titulo = ET_titulo.getText().toString();
+        desarrollo = ET_cuerpo.getText().toString();
+        fecha = ET_fecha.getText().toString();
+
+        if(titulo.isEmpty() || desarrollo.isEmpty() || fecha.isEmpty()) {
+            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            JSONObject nuevo = new JSONObject();
+            try {
+                nuevo.put("titulo", titulo);
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                Log.d("3", "aqui usuario");
+                throw new RuntimeException(e);
+            }
+            try {
+                nuevo.put("desarrollo", desarrollo);
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                Log.d("3", "aqui contra");
+                throw new RuntimeException(e);
+            }
+            try {
+                nuevo.put("fecha", fecha);
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                Log.d("3", "aqui contra");
+                throw new RuntimeException(e);
+            }
+            String url = "http://192.168.137.99/insertar.php"; //cambia la IP por la tuya (ipconfig en cmd)
+            JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, nuevo, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        Toast.makeText(getApplicationContext(), "Se ha creado el recordatorioIn", Toast.LENGTH_SHORT).show();
-                    } catch (Exception e){
-                        Log.d("3", "aqui estoy");
+                        if (response.getInt("usr") != -1) {
+                            Toast.makeText(getApplicationContext(), "Se ha creado el usuario", Toast.LENGTH_SHORT).show();
+                            Intent viewteams = new Intent(getApplicationContext(), inicio.class);
+                            startActivity(viewteams);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
                         throw new RuntimeException(e);
                     }
                 }
@@ -128,25 +170,12 @@ public class insertarl extends AppCompatActivity {
                     Log.d("error", error.getMessage());
                 }
             });
-            RequestQueue fila = Volley.newRequestQueue(this);
+            RequestQueue fila = Volley.newRequestQueue(insertarl.this);
             fila.add(pet);
-        }else{
-            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
-        }
-    }
-    */
 
-    private void insertar2(){
-        String titulo, desarrollo, fecha;
-        titulo = ET_titulo.getText().toString();
-        desarrollo = ET_cuerpo.getText().toString();
-        fecha = ET_fecha.getText().toString();
-        if(titulo.isEmpty() || desarrollo.isEmpty() || fecha.isEmpty()) {
-            recordatorio nuevo = new recordatorio(titulo, desarrollo, fecha);
-            lista.listaIn.add(nuevo);
-            Toast.makeText(this, "Nota creada", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+            //Intent i = new Intent(insertarl.this, MainActivity.class);
+            //startActivity(i);
         }
     }
+
 }

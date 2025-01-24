@@ -30,7 +30,8 @@ public class adaptadorver extends RecyclerView.Adapter<adaptadorver.activity> {
     public void onBindViewHolder(@NonNull adaptadorver.activity holder, int position) {
         final int pos = position;
         holder.titulo.setText(lista.listaIn.get(position).getTitulo());
-
+        holder.cuerpo.setText(lista.listaIn.get(position).getCuerpo());
+        holder.fecha.setText(lista.listaIn.get(position).getFecha());
     }
 
     @Override

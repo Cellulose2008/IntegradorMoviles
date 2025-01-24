@@ -142,11 +142,64 @@ public class insertarl extends AppCompatActivity {
         desarrollo = ET_cuerpo.getText().toString();
         fecha = ET_fecha.getText().toString();
         if(titulo.isEmpty() || desarrollo.isEmpty() || fecha.isEmpty()) {
+            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+        }else{
+            /*
             recordatorio nuevo = new recordatorio(titulo, desarrollo, fecha);
             lista.listaIn.add(nuevo);
             Toast.makeText(this, "Nota creada", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+             */
+
+            JSONObject nuevo = new JSONObject();
+            try {
+                nuevo.put("titulo", titulo);
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                Log.d("3", "aqui usuario");
+                throw new RuntimeException(e);
+            }
+            try {
+                nuevo.put("desarrollo", desarrollo);
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                Log.d("3", "aqui contra");
+                throw new RuntimeException(e);
+            }
+            try {
+                nuevo.put("fecha", fecha);
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                Log.d("3", "aqui contra");
+                throw new RuntimeException(e);
+            }
+            String url = "http://192.168.137.99/insertar.php"; //cambia la IP por la tuya (ipconfig en cmd)
+            JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, nuevo, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.getInt("usr") != -1) {
+                            Toast.makeText(getApplicationContext(), "Se ha creado el usuario", Toast.LENGTH_SHORT).show();
+                            Intent viewteams = new Intent(getApplicationContext(), inicio.class);
+                            startActivity(viewteams);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                        throw new RuntimeException(e);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    String errorMessage = (error.getMessage() != null) ? error.getMessage() : "Error desconocido";
+                    // Mostrar el mensaje de error en Log
+                    Log.d("error", error.getMessage());
+                }
+            });
+            RequestQueue fila = Volley.newRequestQueue(insertarl.this);
+            fila.add(pet);
+
         }
     }
 }

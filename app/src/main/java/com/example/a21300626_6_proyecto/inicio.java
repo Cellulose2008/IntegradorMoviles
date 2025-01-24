@@ -63,7 +63,7 @@ public class inicio extends AppCompatActivity {
     private void ingresar() {
 
         //cambia la IP por la tuya (ipconfig en cmd)
-        String url="http://192.168.100.100/ingreso.php?usr=";
+        String url="http:/192.168.137.99/ingreso.php?usr=";
         url=url+usuario.getText().toString();
         url=url+"&pass=";
         url=url+contra.getText().toString();

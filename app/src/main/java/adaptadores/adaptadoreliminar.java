@@ -1,17 +1,32 @@
 package adaptadores;
 
+import static androidx.core.content.ContextCompat.startActivity;
 import static lista.lista.listaIn;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.a21300626_6_proyecto.R;
+import com.example.a21300626_6_proyecto.inicio;
+import com.example.a21300626_6_proyecto.insertarl;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +35,7 @@ import recordatorio.recordatorio;
 
 public class adaptadoreliminar extends RecyclerView.Adapter<adaptadoreliminar.activity> {
 
-    public Context context;
+    public static Context context;
 
     @NonNull
     @Override
@@ -53,6 +68,55 @@ public class adaptadoreliminar extends RecyclerView.Adapter<adaptadoreliminar.ac
         for (recordatorio item : listaIn) {
             if (item.isChecked()) {
                 itemsParaEliminar.add(item);
+
+                JSONObject nuevo = new JSONObject();
+                try {
+                    nuevo.put("titulo", item.getTitulo());
+                } catch (JSONException e) {
+                    //Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                    Log.d("3", "aqui usuario");
+                    throw new RuntimeException(e);
+                }
+                try {
+                    nuevo.put("desarrollo", item.getCuerpo());
+                } catch (JSONException e) {
+                    //Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                    Log.d("3", "aqui contra");
+                    throw new RuntimeException(e);
+                }
+                try {
+                    nuevo.put("fecha", item.getFecha());
+                } catch (JSONException e) {
+                    //Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                    Log.d("3", "aqui contra");
+                    throw new RuntimeException(e);
+                }
+                String url = "http://192.168.137.99/eliminar.php"; //cambia la IP por la tuya (ipconfig en cmd)
+                JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, nuevo, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getInt("usr") != -1) {
+                                //Toast.makeText(getApplicationContext(), "Se ha creado el usuario", Toast.LENGTH_SHORT).show();
+                            } else {
+                                //Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            //Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String errorMessage = (error.getMessage() != null) ? error.getMessage() : "Error desconocido";
+                        // Mostrar el mensaje de error en Log
+                        Log.d("error", error.getMessage());
+                    }
+                });
+                RequestQueue fila = Volley.newRequestQueue(context);
+                fila.add(pet);
+
             }
         }
         listaIn.removeAll(itemsParaEliminar);

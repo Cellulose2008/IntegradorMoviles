@@ -43,8 +43,13 @@ public class Actualizar extends AppCompatActivity {
         ET_titulo = findViewById(R.id.tituloID);
 
         posicion = 0;
-
-        llenardatos(posicion);
+        if(!lista.listaIn.isEmpty()) {
+            llenardatos(posicion);
+        }else{
+            Toast.makeText(this, "No hay recordatorios que modificar", Toast.LENGTH_SHORT).show();
+            Intent viewteams = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(viewteams);
+        }
 
         Anterior.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,9 +101,9 @@ public class Actualizar extends AppCompatActivity {
     }
 
     private void llenardatos(int posicion) {
-        ET_titulo.setText(lista.listaIn.get(posicion).getTitulo());
-        ET_fecha.setText(lista.listaIn.get(posicion).getFecha());
-        ET_cuerpo.setText(lista.listaIn.get(posicion).getCuerpo());
+            ET_titulo.setText(lista.listaIn.get(posicion).getTitulo());
+            ET_fecha.setText(lista.listaIn.get(posicion).getFecha());
+            ET_cuerpo.setText(lista.listaIn.get(posicion).getCuerpo());
     }
 
     @Override

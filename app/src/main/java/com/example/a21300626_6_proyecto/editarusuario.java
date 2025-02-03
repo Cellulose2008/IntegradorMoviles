@@ -66,7 +66,7 @@ public class editarusuario extends AppCompatActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                String url = "http://192.168.137.99/modificar.php"; //cambia la IP por la tuya (ipconfig en cmd)
+                String url = "http://192.168.100.100/modificar.php"; //cambia la IP por la tuya (ipconfig en cmd)
                 JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, nuevo, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

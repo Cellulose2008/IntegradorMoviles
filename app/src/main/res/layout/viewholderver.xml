@@ -44,7 +44,7 @@
         <TextView
             android:id="@+id/cuerpoviewID"
             android:layout_width="210dp"
-            android:layout_height="170dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/segoesc"
             android:textSize="10sp"

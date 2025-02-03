@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -77,12 +78,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(viewteams);
             }
         });
+        empezar();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -119,33 +121,44 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void empezar() {
-        String url = "http://192.168.100.100/ver.php"; // cambia la IP por la tuya (ipconfig en cmd)
-        Response.Listener<JSONArray> respuesta = new Response.Listener<JSONArray>() {
+        String url = "http://192.168.100.100/ver.php"; // Asegúrate de que esta IP es accesible
+
+        Response.Listener<JSONObject> respuesta = new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
                 try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject recordatorio = response.getJSONObject(i);
-                        String titulo = recordatorio.getString("titulo");
-                        String desarrollo = recordatorio.getString("desarrollo");
-                        String fecha = recordatorio.getString("fecha");
-                        lista.listaIn.add(new recordatorio(titulo, desarrollo, fecha));
+                    String status = response.getString("status");
+                    if (status.equals("success")) {
+                        // Obtener el array "data" del JSON
+                        JSONArray dataArray = response.getJSONArray("data");
+
+                        lista.listaIn.clear();
+                        for (int i = 0; i < dataArray.length(); i++) {
+                            JSONObject recordatorio = dataArray.getJSONObject(i);
+                            String titulo = recordatorio.getString("Titulo");
+                            String desarrollo = recordatorio.getString("Desarrollo");
+                            String fecha = recordatorio.getString("Fecha");
+                            lista.listaIn.add(new recordatorio(titulo, desarrollo, fecha));
+                        }
                     }
                 } catch (Exception e) {
-                    Log.d("3", "aqui estoy");
-                    throw new RuntimeException(e);
+                    Log.d("JSONError", "Error al procesar el JSON", e);
                 }
             }
         };
+
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error", error.toString());
+                Log.d("Error", "Volley Error: " + error.toString());
             }
         };
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, respuesta, errorListener);
+
+        // Usa JsonObjectRequest en lugar de JsonArrayRequest
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, respuesta, errorListener);
         RequestQueue fila = Volley.newRequestQueue(MainActivity.this);
-        fila.add(jsonArrayRequest);
+        fila.add(jsonObjectRequest);
     }
 }

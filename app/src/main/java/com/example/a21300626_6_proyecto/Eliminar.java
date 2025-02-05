@@ -103,6 +103,11 @@ public class Eliminar extends AppCompatActivity {
             startActivity(viewteams);
         }
 
+        if (item.getItemId() == R.id.salir) {
+            Intent viewteams = new Intent(this, inicio.class);
+            startActivity(viewteams);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

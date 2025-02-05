@@ -2,6 +2,7 @@ package com.example.a21300626_6_proyecto;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,16 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import lista.lista;
 import recordatorio.recordatorio;
@@ -75,16 +86,64 @@ public class Actualizar extends AppCompatActivity {
     }
 
     private void actualizar() {
-        recordatorio unrecordatorio = new recordatorio(ET_titulo.getText().toString(),
-                ET_cuerpo.getText().toString(), ET_fecha.getText().toString());
-
-        unrecordatorio.setCuerpo(ET_cuerpo.getText().toString());
-        unrecordatorio.setTitulo(ET_titulo.getText().toString());
-        unrecordatorio.setFecha(ET_fecha.getText().toString());
-
-        lista.listaIn.set(posicion, unrecordatorio);
-        Toast.makeText(this, "Actualizado.", Toast.LENGTH_SHORT).show();
+        if (ET_titulo.getText().toString().isEmpty() || ET_cuerpo.getText().toString().isEmpty() || ET_fecha.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+        } else {
+            JSONObject nuevos = new JSONObject();
+            try {
+                nuevos.put("titulo", ET_titulo.getText().toString());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                nuevos.put("desarrollo", ET_cuerpo.getText().toString());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                nuevos.put("fecha", ET_fecha.getText().toString());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                nuevos.put("id", posicion + 1);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            String url = "http://192.168.100.100/actualizar.php"; //cambia la IP por la tuya (ipconfig en cmd)
+            JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, nuevos, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.getInt("usr") != -1) {
+                            recordatorio unrecordatorio = new recordatorio(ET_titulo.getText().toString(),
+                                    ET_cuerpo.getText().toString(), ET_fecha.getText().toString());
+                            unrecordatorio.setCuerpo(ET_cuerpo.getText().toString());
+                            unrecordatorio.setTitulo(ET_titulo.getText().toString());
+                            unrecordatorio.setFecha(ET_fecha.getText().toString());
+                            lista.listaIn.set(posicion, unrecordatorio);
+                            Toast.makeText(getApplicationContext(), "Se ha actualizado el recordatorio", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error al actualizar el recordatorio", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error al actualizar el recordatorio", Toast.LENGTH_SHORT).show();
+                        throw new RuntimeException(e);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    String errorMessage = (error.getMessage() != null) ? error.getMessage() : "Error desconocido";
+                    // Mostrar el mensaje de error en Log
+                    Log.d("error", error.getMessage());
+                }
+            });
+            RequestQueue fila = Volley.newRequestQueue(Actualizar.this);
+            fila.add(pet);
+        }
     }
+
 
     private void siguiente() {
         Integer tamaño = lista.listaIn.size();
@@ -95,9 +154,13 @@ public class Actualizar extends AppCompatActivity {
 
     private void anterior() {
         Integer tamaño = lista.listaIn.size();
-
-        posicion = (posicion -1) % tamaño;
-        llenardatos(posicion);
+        if (posicion != 0) {
+            posicion = (posicion - 1) % tamaño;
+            llenardatos(posicion);
+        }else{
+            posicion = tamaño - 1;
+            llenardatos(posicion);
+        }
     }
 
     private void llenardatos(int posicion) {
@@ -141,6 +204,10 @@ public class Actualizar extends AppCompatActivity {
             startActivity(viewteams);
         }
 
+        if (item.getItemId() == R.id.salir) {
+            Intent viewteams = new Intent(this, inicio.class);
+            startActivity(viewteams);
+        }
         return super.onOptionsItemSelected(item);
     }
 }

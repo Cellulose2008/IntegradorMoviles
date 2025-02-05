@@ -119,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
             Intent viewteams = new Intent(this, editarusuario.class);
             startActivity(viewteams);
         }
+        if (item.getItemId() == R.id.salir) {
+            Intent viewteams = new Intent(this, inicio.class);
+            startActivity(viewteams);
+        }
         return super.onOptionsItemSelected(item);
     }
 

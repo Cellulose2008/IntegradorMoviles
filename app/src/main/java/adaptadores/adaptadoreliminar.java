@@ -91,18 +91,18 @@ public class adaptadoreliminar extends RecyclerView.Adapter<adaptadoreliminar.ac
                     Log.d("3", "aqui contra");
                     throw new RuntimeException(e);
                 }
-                String url = "http://192.168.137.99/eliminar.php"; //cambia la IP por la tuya (ipconfig en cmd)
+                String url = "http://192.168.100.100/eliminar.php"; //cambia la IP por la tuya (ipconfig en cmd)
                 JsonObjectRequest pet = new JsonObjectRequest(Request.Method.POST, url, nuevo, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getInt("usr") != -1) {
-                                //Toast.makeText(getApplicationContext(), "Se ha creado el usuario", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context.getApplicationContext(), "Se ha eliminado el recordatorio", Toast.LENGTH_SHORT).show();
                             } else {
-                                //Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context.getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
-                            //Toast.makeText(getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context.getApplicationContext(), "Error al crear el usuario", Toast.LENGTH_SHORT).show();
                             throw new RuntimeException(e);
                         }
                     }
